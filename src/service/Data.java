@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public interface Data {
 	
@@ -28,5 +29,43 @@ public interface Data {
 		}
 		
 		return usersList;
+	}
+	
+	public static void updateAndSaveUsers(JSONArray updatedUsers) {
+		try {
+			// Convertir le JSONArray mis à jour en chaîne JSON
+			String updatedJsonContent = updatedUsers.toString();
+			
+			// Écrire la chaîne JSON mise à jour dans le fichier
+			Files.write(Paths.get(FILE_PATH), updatedJsonContent.getBytes());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void updateUserData(String login, JSONArray loginManagement, JSONArray passwordManagement, JSONArray urlManagement) {
+		try {
+			// Obtenez la liste d'utilisateurs actuelle
+			JSONArray users = getUsers();
+			
+			// Parcourez les utilisateurs pour trouver celui avec le login spécifié
+			for (int i = 0; i < users.length(); i++) {
+				JSONObject user = users.getJSONObject(i);
+				if (user.getString("login").equals(login)) {
+					// Mettez à jour les données spécifiques pour cet utilisateur
+					user.getJSONObject("data").put("loginManagement", loginManagement);
+					user.getJSONObject("data").put("passwordManagement", passwordManagement);
+					user.getJSONObject("data").put("urlManagement", urlManagement);
+					break; // Sortez de la boucle une fois que l'utilisateur est trouvé
+				}
+			}
+			
+			// Mettez à jour et enregistrez le fichier
+			updateAndSaveUsers(users);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 }
