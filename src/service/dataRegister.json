@@ -1,0 +1,12 @@
+[
+	{
+		"login": "Taleb",
+		"password": "123",
+		"data": 
+			{
+				"loginManagement": [],
+				"passwordManagement" : [],
+				"urlManagement": []
+			}
+	}
+]
