@@ -8,6 +8,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public interface Data {
 	
 	public static String FILE_PATH = "src/service/dataRegister.json";
@@ -68,4 +71,5 @@ public interface Data {
 			e.printStackTrace();
 		}
 	}
+	
 }

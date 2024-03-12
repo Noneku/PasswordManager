@@ -1,6 +1,5 @@
 package application;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,18 +12,16 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.TextFieldTableCell;
 import service.Data;
+import javafx.beans.property.SimpleStringProperty;
 
 public class ManagementController {
-		
-	public Object userConnected = User.getCurrentUser();
 	
 	// Remplacez Object par votre classe User réelle
     private ObservableList<User> UserObservable = FXCollections.observableArrayList();
 	
 	@FXML
-    private TableView<?> tableView;
+    private TableView<User> tableView;
 
     @FXML
     private TableColumn<User, String> PasswordColumn;
@@ -48,45 +45,33 @@ public class ManagementController {
     private TextField managementUsername;
 
     @FXML
-    void initialize() throws JSONException{
+    void initialize() throws JSONException {
     	
-    	// Liez les colonnes aux propriétés de la classe User
-    	JSONArray PasswordManager = User.getPasswordManagement();
+    	UserObservable.add(new User());  // Ajoutez un objet User à titre de test
     	
-    	for(int i = 0; i < PasswordManager.length(); i++) {
-    		System.out.println("poliaze");
-    	}
-    
-    	
-    	// Configurez les colonnes pour éditer le contenu des cellules
-        PasswordColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        URLColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        UserNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        
-        
-       // PasswordColumn.setCellValueFactory(cellData -> cellData.getValue());
-        //URLColumn.setCellValueFactory(cellData -> cellData.getValue().getUrlManagement());
-        //UserNameColumn.setCellValueFactory(cellData -> cellData.getValue().getLoginManagement());
-    	
-     // Définissez les données pour le TableView
-        //tableView.setItems(UserObservable);
-    	
+    	PasswordColumn.setCellValueFactory(cellData -> cellData.getValue().passwordManagementProperty());
+
+
+        // Configurez la TableView avec la liste observable
+        tableView.setItems(UserObservable);
+
+        // Testez si les éléments sont correctement ajoutés à la liste observable
+
+
     }
     
     @FXML
     void onClickAddButton(ActionEvent event) throws JSONException {
     	
     	JSONObject currentUserData = User.getCurrentUser().getJSONObject("data");
-    	
-    	//Get propertys of User
-    	
-    	
+    	   	
     	//Update My Object User
     	
     	User.setLoginManagement(this.managementUsername.getText());
 		User.setUrlManagement(this.managementUrl.getText());
 		User.setPasswordManagement(this.managementPassword.getText());
 		
+		//Update File JSON
 		Data.updateUserData("Taleb", User.getLoginManagement(), User.getPasswordManagement(), User.getUrlManagement());
     }
     
