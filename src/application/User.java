@@ -1,117 +1,68 @@
 package application;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class User {
+
+
+	String id;
+	String name;
+	ArrayList<String> identifiant_management = new ArrayList<>();
+	ArrayList<String> password_management = new ArrayList<>();
+	ArrayList<String> url_management = new ArrayList<>();
+	//, String password_management, String url_management
 	
-	public static JSONObject currentUser;
-	
-	public static JSONArray loginManagement;
-	
-	public static JSONArray urlManagement;
-	
-	public static JSONArray passwordManagement;
-	
-	public static JSONObject getCurrentUser() {
-		return currentUser;
+	public User(Map<String, ArrayList<String>> User) {
+		super();
+		this.id = User.get("Login").get(0);
+		this.name = User.get("Login").get(1);
+		this.identifiant_management = User.get("Identifiants");
+		this.password_management = User.get("Passwords");
+		this.url_management = User.get("URLs");
 	}
 	
-		
-	public static void setCurrentUser(Object object) {
-		User.currentUser = (JSONObject) object;
-	}
-	
-    public StringProperty loginManagementProperty() {
-    	 try {
-             JSONArray jsonArray = User.currentUser.getJSONObject("data").getJSONArray("loginManagement");
-             StringBuilder result = new StringBuilder();
-
-             for (int i = 0; i < jsonArray.length(); i++) {
-                 result.append(jsonArray.getString(i));
-                 if (i < jsonArray.length() - 1) {
-                     result.append(", "); // Ajoutez le séparateur que vous souhaitez
-                 }
-             }
-
-             return new SimpleStringProperty(result.toString());
-         } catch (JSONException e) {
-             e.printStackTrace();
-             return new SimpleStringProperty(""); // ou autre gestion d'erreur
-         }
-    }
-	
-	public static JSONArray getLoginManagement() throws JSONException {
-		return User.currentUser.getJSONObject("data").getJSONArray("loginManagement");
-	}
-
-	public static void setLoginManagement(String loginManagement) throws JSONException {
-		User.loginManagement = User.getLoginManagement();
-		
-		User.loginManagement.put(loginManagement);
-	}
-	
-    public StringProperty urlManagementProperty() {
-    	 try {
-             JSONArray jsonArray = User.currentUser.getJSONObject("data").getJSONArray("urlManagement");
-             StringBuilder result = new StringBuilder();
-
-             for (int i = 0; i < jsonArray.length(); i++) {
-                 result.append(jsonArray.getString(i));
-                 if (i < jsonArray.length() - 1) {
-                     result.append(", "); // Ajoutez le séparateur que vous souhaitez
-                 }
-             }
-
-             return new SimpleStringProperty(result.toString());
-         } catch (JSONException e) {
-             e.printStackTrace();
-             return new SimpleStringProperty(""); // ou autre gestion d'erreur
-         }
-    }
-
-	public static JSONArray getUrlManagement() throws JSONException {
-		return User.currentUser.getJSONObject("data").getJSONArray("urlManagement");
-	}
-
-	public static void setUrlManagement(String urlManagement) throws JSONException {
-		User.urlManagement = User.getUrlManagement();
-		
-		User.urlManagement.put(urlManagement);
-	}
-	
-	public StringProperty passwordManagementProperty() {
-        try {
-            JSONArray jsonArray = User.currentUser.getJSONObject("data").getJSONArray("passwordManagement");
-            StringBuilder result = new StringBuilder();
-
-            for (int i = 0; i < jsonArray.length(); i++) {
-                result.append(jsonArray.getString(i));
-                if (i < jsonArray.length() - 1) {
-                    result.append(", "); // Ajoutez le séparateur que vous souhaitez
-                }
-            }
-
-            return new SimpleStringProperty(result.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return new SimpleStringProperty(""); // ou autre gestion d'erreur
-        }
-    }
-
-	public static JSONArray getPasswordManagement() throws JSONException {
-		return User.currentUser.getJSONObject("data").getJSONArray("passwordManagement");
-	}
-
-	public static void setPasswordManagement(String passwordManagement) throws JSONException {
-		User.passwordManagement = User.getPasswordManagement();
-		
-		User.passwordManagement.put(passwordManagement);
+	public String getId() {
+		return id;
 	}
 
 
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public ArrayList<String> getIdentifiant_management() {
+		return identifiant_management;
+	}
+
+
+	public void setIdentifiant_management(ArrayList<String> identifiant_management) {
+		this.identifiant_management = identifiant_management;
+	}
+
+
+	public ArrayList<String> getPassword_management() {
+		return password_management;
+	}
+
+
+	public void setPassword_management(ArrayList<String> password_management) {
+		this.password_management = password_management;
+	}
+
+
+	public ArrayList<String> getUrl_management() {
+		return url_management;
+	}
+
+
+	public void setUrl_management(ArrayList<String> url_management) {
+		this.url_management = url_management;
+	}
 }

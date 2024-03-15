@@ -1,5 +1,6 @@
 package application;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -18,19 +20,19 @@ import javafx.beans.property.SimpleStringProperty;
 public class ManagementController {
 	
 	// Remplacez Object par votre classe User réelle
-    private ObservableList<User> UserObservable = FXCollections.observableArrayList();
+    private ObservableList<JSONArray> UserManagementObservable = FXCollections.observableArrayList();
 	
 	@FXML
-    private TableView<User> tableView;
+    private TableView<JSONArray> tableView;
 
     @FXML
-    private TableColumn<User, String> PasswordColumn;
+    private TableColumn<JSONArray, String> PasswordColumn;
 
     @FXML
-    private TableColumn<User, String> URLColumn;
+    private TableColumn<JSONArray, String> URLColumn;
 
     @FXML
-    private TableColumn<User, String> UserNameColumn;
+    private TableColumn<JSONArray, String> UserNameColumn;
 
     @FXML
     private Button managementAddButton;
@@ -47,32 +49,37 @@ public class ManagementController {
     @FXML
     void initialize() throws JSONException {
     	
-    	UserObservable.add(new User());  // Ajoutez un objet User à titre de test
+    	//UserManagementObservable.add(User.getLoginManagement());
+    	//UserManagementObservable.add(User.getPasswordManagement());
+    	//UserManagementObservable.add(User.getUrlManagement());
     	
-    	PasswordColumn.setCellValueFactory(cellData -> cellData.getValue().passwordManagementProperty());
-
-
-        // Configurez la TableView avec la liste observable
-        tableView.setItems(UserObservable);
-
-        // Testez si les éléments sont correctement ajoutés à la liste observable
-
+    	
+    	//for (JSONArray element : UserManagementObservable) {
+    		
+    		//System.out.println(element.getInt(0));
+    		//System.out.println(element.getString(2));
+    		
+    	     //PasswordColumn.setCellValueFactory(cellData -> cellData.getValue().getString(0));
+    	//}
+    	
 
     }
     
     @FXML
     void onClickAddButton(ActionEvent event) throws JSONException {
     	
-    	JSONObject currentUserData = User.getCurrentUser().getJSONObject("data");
-    	   	
-    	//Update My Object User
-    	
-    	User.setLoginManagement(this.managementUsername.getText());
-		User.setUrlManagement(this.managementUrl.getText());
-		User.setPasswordManagement(this.managementPassword.getText());
-		
-		//Update File JSON
-		Data.updateUserData("Taleb", User.getLoginManagement(), User.getPasswordManagement(), User.getUrlManagement());
+		/*
+		 * JSONObject currentUserData = User.getCurrentUser().getJSONObject("data");
+		 * 
+		 * //Update My Object User
+		 * 
+		 * User.setLoginManagement(this.managementUsername.getText());
+		 * User.setUrlManagement(this.managementUrl.getText());
+		 * User.setPasswordManagement(this.managementPassword.getText());
+		 * 
+		 * //Update File JSON Data.updateUserData("Taleb", User.getLoginManagement(),
+		 * User.getPasswordManagement(), User.getUrlManagement());
+		 */
     }
     
 }
