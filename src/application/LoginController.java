@@ -33,11 +33,11 @@ public class LoginController implements Data {
     	
     	//Vérification de l'identité de l'utilisateur
 		if(Data.readRecord(loginUsername.getText(), loginPassword.getText())) {
+			
 			//J'enregistre L'utilisateur
 			
-			User User = new User(Data.currentUser(loginUsername.getText(),loginPassword.getText()));
-			
-			System.out.println(User.getPassword_management());
+			User user = User.getInstance(Data.currentUser(loginUsername.getText(), loginPassword.getText()));
+
 			
 		    // Récupération de la référence à la scène depuis l'événement
 		    Scene currentScene = ((Button) event.getSource()).getScene();
